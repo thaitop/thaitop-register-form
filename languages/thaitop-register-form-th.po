@@ -1,0 +1,297 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: th\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.5\n"
+
+msgid "Please fill in all required fields"
+msgstr "กรุณากรอกข้อมูลที่จำเป็นให้ครบถ้วน"
+
+msgid "This username is already taken"
+msgstr "ชื่อผู้ใช้นี้ถูกใช้งานแล้ว"
+
+msgid "This email is already registered"
+msgstr "อีเมลนี้ถูกลงทะเบียนแล้ว"
+
+msgid "Please verify that you are not a robot"
+msgstr "กรุณายืนยันว่าคุณไม่ใช่โปรแกรมอัตโนมัติ"
+
+msgid "Registration validation failed"
+msgstr "การตรวจสอบการลงทะเบียนล้มเหลว"
+
+msgid "Error creating user account"
+msgstr "เกิดข้อผิดพลาดในการสร้างบัญชีผู้ใช้"
+
+msgid "Custom field data saved successfully"
+msgstr "บันทึกข้อมูลฟิลด์กำหนดเองสำเร็จ"
+
+msgid "Error saving custom field data"
+msgstr "เกิดข้อผิดพลาดในการบันทึกข้อมูลฟิลด์กำหนดเอง"
+
+msgid "Register Form Settings"
+msgstr "ตั้งค่าแบบฟอร์มลงทะเบียน"
+
+msgid "Register Form"
+msgstr "แบบฟอร์มลงทะเบียน"
+
+msgid "Custom Fields"
+msgstr "ฟิลด์กำหนดเอง"
+
+msgid "Instructions"
+msgstr "คำแนะนำ"
+
+msgid "1. Place the following shortcode in the page or post where you want to display the registration form:"
+msgstr "1. วาง shortcode ต่อไปนี้ในหน้าหรือโพสต์ที่คุณต้องการแสดงแบบฟอร์มลงทะเบียน:"
+
+msgid "reCAPTCHA Setup"
+msgstr "ตั้งค่า reCAPTCHA"
+
+msgid "2. Register and get your reCAPTCHA keys at:"
+msgstr "2. ลงทะเบียนและรับคีย์ reCAPTCHA ได้ที่:"
+
+msgid "3. Choose reCAPTCHA v2 (\"I'm not a robot\")"
+msgstr "3. เลือก reCAPTCHA v2 (\"ฉันไม่ใช่โปรแกรมอัตโนมัติ\")"
+
+msgid "4. Add your domain to the reCAPTCHA settings"
+msgstr "4. เพิ่มโดเมนของคุณในการตั้งค่า reCAPTCHA"
+
+msgid "5. Copy Site Key and Secret Key into the fields below"
+msgstr "5. คัดลอก Site Key และ Secret Key ลงในฟิลด์ด้านล่าง"
+
+msgid "Features"
+msgstr "คุณสมบัติ"
+
+msgid "Register new members"
+msgstr "ลงทะเบียนสมาชิกใหม่"
+
+msgid "Validate data"
+msgstr "ตรวจสอบข้อมูล"
+
+msgid "Prevent spam with reCAPTCHA"
+msgstr "ป้องกันสแปมด้วย reCAPTCHA"
+
+msgid "Auto-login after registration"
+msgstr "เข้าสู่ระบบอัตโนมัติหลังลงทะเบียน"
+
+msgid "First Name *"
+msgstr "ชื่อ *"
+
+msgid "Last Name *"
+msgstr "นามสกุล *"
+
+msgid "Username *"
+msgstr "ชื่อผู้ใช้ *"
+
+msgid "Email *"
+msgstr "อีเมล *"
+
+msgid "Password *"
+msgstr "รหัสผ่าน *"
+
+msgid "Register"
+msgstr "ลงทะเบียน"
+
+msgid "Color Settings"
+msgstr "ตั้งค่าสี"
+
+msgid "Color Scheme"
+msgstr "ชุดสี"
+
+msgid "Enable reCAPTCHA"
+msgstr "เปิดใช้งาน reCAPTCHA"
+
+msgid "Enable spam protection with reCAPTCHA"
+msgstr "เปิดใช้งานการป้องกันสแปมด้วย reCAPTCHA"
+
+msgid "When enabled, users must verify they are not a robot before registering"
+msgstr "เมื่อเปิดใช้งาน ผู้ใช้ต้องยืนยันว่าไม่ใช่โปรแกรมอัตโนมัติก่อนลงทะเบียน"
+
+msgid "Choose a pre-made or custom color scheme"
+msgstr "เลือกชุดสีที่มีให้หรือกำหนดเอง"
+
+msgid "You are already logged in"
+msgstr "คุณเข้าสู่ระบบอยู่แล้ว"
+
+msgid "Registration successful"
+msgstr "ลงทะเบียนสำเร็จ"
+
+msgid "Confirm Password *"
+msgstr "ยืนยันรหัสผ่าน *"
+
+msgid "Passwords do not match"
+msgstr "รหัสผ่านไม่ตรงกัน"
+
+msgid "Password must be at least 8 characters long"
+msgstr "รหัสผ่านต้องมีความยาวอย่างน้อย 8 ตัวอักษร"
+
+msgid "Please enter a valid email address"
+msgstr "กรุณากรอกอีเมลให้ถูกต้อง"
+
+msgid "Back to login"
+msgstr "กลับไปหน้าเข้าสู่ระบบ"
+
+msgid "ThaiTop Register Form"
+msgstr "แบบฟอร์มลงทะเบียน ThaiTop"
+
+msgid "Wordpress user registration form with custom fields."
+msgstr "แบบฟอร์มลงทะเบียนผู้ใช้ WordPress พร้อมฟิลด์กำหนดเอง"
+
+msgid "reCAPTCHA Site Key"
+msgstr "คีย์เว็บไซต์ reCAPTCHA"
+
+msgid "Key for displaying reCAPTCHA on the site"
+msgstr "คีย์สำหรับแสดง reCAPTCHA บนเว็บไซต์"
+
+msgid "reCAPTCHA Secret Key"
+msgstr "คีย์ลับ reCAPTCHA"
+
+msgid "Secret key for verifying reCAPTCHA"
+msgstr "คีย์ลับสำหรับตรวจสอบ reCAPTCHA"
+
+msgid "After Login Redirect URL"
+msgstr "URL สำหรับเปลี่ยนเส้นทางหลังเข้าสู่ระบบ"
+
+msgid "Enter a custom URL to redirect users after successful auto-login."
+msgstr "ใส่ URL ที่ต้องการให้ผู้ใช้ไปหลังจากเข้าสู่ระบบอัตโนมัติสำเร็จ"
+
+msgid "Add New Field"
+msgstr "เพิ่มฟิลด์ใหม่"
+
+msgid "Field Label"
+msgstr "ป้ายกำกับฟิลด์"
+
+msgid "Field Name"
+msgstr "ชื่อฟิลด์"
+
+msgid "Field Type"
+msgstr "ประเภทฟิลด์"
+
+msgid "Text"
+msgstr "ข้อความ"
+
+msgid "Phone"
+msgstr "โทรศัพท์"
+
+msgid "Date"
+msgstr "วันที่"
+
+msgid "Meta Key"
+msgstr "คีย์เมตา"
+
+msgid "The key that will be used to store this field in user meta"
+msgstr "คีย์ที่จะใช้เก็บข้อมูลฟิลด์นี้ในเมตาของผู้ใช้"
+
+msgid "Required"
+msgstr "จำเป็น"
+
+msgid "Add Field"
+msgstr "เพิ่มฟิลด์"
+
+msgid "Existing Fields"
+msgstr "ฟิลด์ที่มีอยู่"
+
+msgid "Label"
+msgstr "ป้ายกำกับ"
+
+msgid "Name"
+msgstr "ชื่อ"
+
+msgid "Type"
+msgstr "ประเภท"
+
+msgid "Actions"
+msgstr "การกระทำ"
+
+msgid "Form Background"
+msgstr "พื้นหลังฟอร์ม"
+
+msgid "Form Text Color"
+msgstr "สีข้อความในฟอร์ม"
+
+msgid "Input Background"
+msgstr "พื้นหลังช่องกรอก"
+
+msgid "Input Text Color"
+msgstr "สีข้อความในช่องกรอก"
+
+msgid "Input Border"
+msgstr "เส้นขอบช่องกรอก"
+
+msgid "Input Focus Border"
+msgstr "เส้นขอบช่องกรอกเมื่อโฟกัส"
+
+msgid "Button Start Color"
+msgstr "สีเริ่มต้นปุ่ม"
+
+msgid "Button End Color"
+msgstr "สีสิ้นสุดปุ่ม"
+
+msgid "Button Text Color"
+msgstr "สีข้อความปุ่ม"
+
+msgid "Label Text Color"
+msgstr "สีข้อความป้ายกำกับ"
+
+msgid "Delete"
+msgstr "ลบ"
+
+msgid "No custom fields found."
+msgstr "ไม่พบฟิลด์กำหนดเอง"
+
+msgid "Available User Meta Keys"
+msgstr "คีย์เมตาผู้ใช้ที่มีอยู่"
+
+msgid "These are the existing user meta keys in your WordPress site. You can use these as reference when creating custom fields."
+msgstr "นี่คือคีย์เมตาผู้ใช้ที่มีอยู่ในเว็บไซต์ WordPress ของคุณ คุณสามารถใช้เป็นตัวอ้างอิงเมื่อสร้างฟิลด์กำหนดเอง"
+
+msgid "Copy"
+msgstr "คัดลอก"
+
+msgid "No custom meta keys found."
+msgstr "ไม่พบคีย์เมตากำหนดเอง"
+
+msgid "Green (Default)"
+msgstr "สีเขียว (ค่าเริ่มต้น)"
+
+msgid "Blue"
+msgstr "สีน้ำเงิน"
+
+msgid "Purple"
+msgstr "สีม่วง"
+
+msgid "Dark"
+msgstr "สีเข้ม"
+
+msgid "Custom"
+msgstr "กำหนดเอง"
+
+msgid "Field \"%s\" is required."
+msgstr "ฟิลด์ \"%s\" จำเป็นต้องกรอก"
+
+msgid "Field added successfully."
+msgstr "เพิ่มฟิลด์สำเร็จ"
+
+msgid "Database error while adding field."
+msgstr "เกิดข้อผิดพลาดฐานข้อมูลขณะเพิ่มฟิลด์"
+
+msgid "Custom Registration Fields"
+msgstr "ฟิลด์ลงทะเบียนกำหนดเอง"
+
+msgid "Action"
+msgstr "การกระทำ"
+
+msgid "Invalid operation"
+msgstr "การดำเนินการไม่ถูกต้อง"
+
+msgid "ThaiTop Register Form Error: "
+msgstr "ข้อผิดพลาดแบบฟอร์มลงทะเบียน ThaiTop: "
+
+msgid "ThaiTop Register Form: CSS file is missing."
+msgstr "แบบฟอร์มลงทะเบียน ThaiTop: ไม่พบไฟล์ CSS"

@@ -1,0 +1,138 @@
+.thaitop-form {
+    max-width: 450px;
+    margin: 2rem auto;
+    padding: 2rem;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+.thaitop-form * {
+    box-sizing: border-box;
+}
+
+.thaitop-form .form-group {
+    margin-bottom: 1.5rem;
+    width: 100%;
+}
+
+.thaitop-form .form-row {
+    display: flex;
+    gap: 20px; /* Add spacing between columns */
+    width: 100%; /* Set row width */
+    margin-bottom: 1.5rem;
+}
+
+.thaitop-form .form-col {
+    flex: 1 1 50%; /* Make each column the same width */
+    min-width: 0; /* Prevent over-expansion */
+}
+
+.thaitop-form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    /* color: #333; */
+    font-size: 0.95rem;
+    width: 100%;
+}
+
+.thaitop-form input {
+    width: 100%;
+    padding: 0.8rem;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    display: block;
+}
+
+.thaitop-form input:focus {
+    outline: none;
+    /* border-color และ box-shadow จะถูกกำหนดด้วย PHP */
+}
+
+.thaitop-form input:hover {
+    border-color: #bdbdbd;
+}
+
+.thaitop-form button {
+    width: 100%;
+    padding: 0.8rem;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    display: block;
+}
+
+.thaitop-form button:hover {
+    transform: translateY(-1px);
+}
+
+.thaitop-form button:active {
+    transform: translateY(0);
+}
+
+.thaitop-error {
+    color: #dc3545;
+    background-color: #fde8e8;
+    padding: 0.8rem;
+    margin-bottom: 1rem;
+    border: 1px solid #f5c2c7;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+}
+
+.thaitop-error::before {
+    content: "⚠";
+    margin-right: 8px;
+    font-size: 1.1rem;
+}
+
+.g-recaptcha {
+    margin-bottom: 1.5rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.g-recaptcha > div {
+    margin: 0 auto;
+}
+
+@media (max-width: 480px) {
+    .thaitop-form {
+        padding: 1.5rem;
+        margin: 1rem;
+        width: calc(100% - 2rem);
+    }
+
+    .thaitop-form .form-row {
+        flex-direction: column;
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    .thaitop-form .form-col {
+        flex: 1 1 100%; /* ให้คอลัมน์กว้างเต็มในโหมดมือถือ */
+        width: 100%;
+        padding: 0;
+        margin-bottom: 1rem;
+    }
+
+    .thaitop-form .form-col:last-child {
+        margin-bottom: 0;
+    }
+
+    .g-recaptcha {
+        transform: scale(0.9);
+        transform-origin: center;
+    }
+}

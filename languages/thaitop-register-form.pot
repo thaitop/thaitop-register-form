@@ -1,0 +1,409 @@
+# Copyright (C) 2023 ThaiTop
+# This file is distributed under the GPL-2.0+.
+msgid ""
+msgstr ""
+"Project-Id-Version: ThaiTop Register Form 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/thaitop-register-form\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2023-01-01T00:00:00+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.8.1\n"
+"X-Domain: thaitop-register-form\n"
+
+#: includes/class-form-handler.php:126
+msgid "Please fill in all required fields"
+msgstr ""
+
+#: includes/class-form-handler.php:130
+msgid "This username is already taken"
+msgstr ""
+
+#: includes/class-form-handler.php:134
+msgid "This email is already registered"
+msgstr ""
+
+#: includes/class-form-handler.php:141
+msgid "Please verify that you are not a robot"
+msgstr ""
+
+#: includes/class-form-handler.php:145
+msgid "Registration validation failed"
+msgstr ""
+
+#: includes/class-form-handler.php:155 
+msgid "Error creating user account"
+msgstr ""
+
+#: includes/class-form-handler.php:160
+msgid "Custom field data saved successfully"
+msgstr ""
+
+#: includes/class-form-handler.php:165
+msgid "Error saving custom field data"
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:12
+msgid "Register Form Settings"
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:13
+msgid "Register Form"
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:21
+msgid "Custom Fields"
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:182
+msgid "Instructions"
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:183
+msgid "1. Place the following shortcode in the page or post where you want to display the registration form:"
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:186
+msgid "reCAPTCHA Setup"
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:187
+msgid "2. Register and get your reCAPTCHA keys at:"
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:190
+msgid "3. Choose reCAPTCHA v2 (\"I'm not a robot\")"
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:191
+msgid "4. Add your domain to the reCAPTCHA settings"
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:192
+msgid "5. Copy Site Key and Secret Key into the fields below"
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:196
+msgid "Features"
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:198
+msgid "Register new members"
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:199
+msgid "Validate data"
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:200
+msgid "Prevent spam with reCAPTCHA"
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:201
+msgid "Auto-login after registration"
+msgstr ""
+
+#: templates/registration-form.php:6
+msgid "First Name *"
+msgstr ""
+
+#: templates/registration-form.php:10
+msgid "Last Name *"
+msgstr ""
+
+#: templates/registration-form.php:15
+msgid "Username *"
+msgstr ""
+
+#: templates/registration-form.php:20
+msgid "Email *"
+msgstr ""
+
+#: templates/registration-form.php:25
+msgid "Password *"
+msgstr ""
+
+#: templates/registration-form.php:34
+msgid "Register"
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:345
+msgid "Color Settings"
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:347
+msgid "Color Scheme"
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:350
+msgid "Enable reCAPTCHA"
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:354
+msgid "Enable spam protection with reCAPTCHA"
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:357
+msgid "When enabled, users must verify they are not a robot before registering"
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:358
+msgid "Choose a pre-made or custom color scheme"
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:362
+msgid "reCAPTCHA Site Key"
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:364
+msgid "Set Custom Colors"
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:368
+msgid "Key for displaying reCAPTCHA on the site"
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:373
+msgid "reCAPTCHA Secret Key"
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:379
+msgid "Secret key for verifying reCAPTCHA"
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:384
+msgid "After Login Redirect URL"
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:390
+msgid "Enter a custom URL to redirect users after successful auto-login."
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:467
+msgid "Add New Field"
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:472
+msgid "Field Label"
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:476
+msgid "Field Name"
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:480
+msgid "Field Type"
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:483
+msgid "Text"
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:484
+msgid "Email"
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:485
+msgid "Phone"
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:486
+msgid "Date"
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:492
+msgid "Meta Key"
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:495
+msgid "The key that will be used to store this field in user meta"
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:499
+msgid "Required"
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:506
+msgid "Add Field"
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:512
+msgid "Existing Fields"
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:518
+msgid "Label"
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:519
+msgid "Name"
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:520
+msgid "Type"
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:522
+msgid "Actions"
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:529
+msgid "Form Background"
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:530
+msgid "Form Text Color"
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:531
+msgid "Input Background"
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:532
+msgid "Input Text Color"
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:533
+msgid "Input Border"
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:534
+msgid "Input Focus Border"
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:535
+msgid "Button Start Color"
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:536
+msgid "Button End Color"
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:537
+msgid "Button Text Color"
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:538
+msgid "Label Text Color"
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:539
+msgid "Delete"
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:545
+msgid "No custom fields found."
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:556
+msgid "Available User Meta Keys"
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:558
+msgid "These are the existing user meta keys in your WordPress site. You can use these as reference when creating custom fields."
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:567
+msgid "Copy"
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:577
+msgid "No custom meta keys found."
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:246
+msgid "Green (Default)"
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:266
+msgid "Blue"
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:286
+msgid "Purple"
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:306
+msgid "Dark"
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:326
+msgid "Custom"
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:450
+msgid "Field \"%s\" is required."
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:470
+msgid "Field added successfully."
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:475
+msgid "Database error while adding field."
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:480
+msgid "Custom Registration Fields"
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:567
+msgid "Meta Key"
+msgstr ""
+
+#: includes/admin/class-admin-settings.php:568
+msgid "Action"
+msgstr ""
+
+msgid "You are already logged in"
+msgstr ""
+
+msgid "Invalid operation"
+msgstr ""
+
+msgid "ThaiTop Register Form Error: "
+msgstr ""
+
+msgid "ThaiTop Register Form: CSS file is missing."
+msgstr ""
+
+msgid "Registration successful"
+msgstr ""
+
+msgid "Confirm Password *"
+msgstr ""
+
+msgid "Passwords do not match"
+msgstr ""
+
+msgid "Password must be at least 8 characters long"
+msgstr ""
+
+msgid "Please enter a valid email address"
+msgstr ""
+
+msgid "Back to login"
+msgstr ""
+
+//. Plugin Name of the plugin
+msgid "ThaiTop Register Form"
+msgstr ""
+
+//. Plugin URI of the plugin
+msgid "https://thaitoptecs.com"
+msgstr ""
+
+//. Description of the plugin
+msgid "Wordpress user registration form with custom fields."
+msgstr ""
+
+//. Author of the plugin
+msgid "ThaiTop"
+msgstr ""
+
+//. Author URI of the plugin
+msgid "https://thaitoptecs.com"
+msgstr ""
