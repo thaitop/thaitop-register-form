@@ -118,7 +118,7 @@
 .ui-sortable-helper {
     display: table;
     background: white !important;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
 .ui-sortable-helper td {

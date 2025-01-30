@@ -42,11 +42,30 @@ class Plugin {
                 echo '</p></div>';
             });
         }
+        
+        // เพิ่มการลงทะเบียน form-layout.css
+        wp_register_style(
+            'thaitop-register-form-layout',
+            THAITOP_REGISTER_PLUGIN_URL . 'assets/css/form-layout.css',
+            [],
+            THAITOP_REGISTER_VERSION
+        );
     }
 
     public function enqueue_assets() {
         if (wp_style_is('thaitop-register-style', 'registered')) {
             wp_enqueue_style('thaitop-register-style');
+            wp_enqueue_style('thaitop-register-form-layout');
         }
+    }
+
+    public function enqueue_scripts() {
+        // ...existing code...
+        wp_enqueue_style(
+            'thaitop-register-form-layout',
+            THAITOP_REGISTER_PLUGIN_URL . 'assets/css/form-layout.css',
+            array(),
+            THAITOP_REGISTER_VERSION
+        );
     }
 }

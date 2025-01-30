@@ -81,40 +81,46 @@ jQuery(document).ready(function($) {
         }
     });
 
-    // เริ่มต้นตาราง sortable
-    if ($('.thaitop-fields-table tbody').length) {
-        $('.thaitop-fields-table tbody').sortable({
-            handle: '.sort-handle',
-            helper: fixWidthHelper,
-            update: function(event, ui) {
-                const items = [];
-                $('.thaitop-fields-table tbody tr').each(function(index) {
-                    items.push({
-                        id: $(this).data('id'),
-                        order: index
-                    });
-                });
-
-                $.ajax({
-                    url: thaitopAdminData.ajaxurl, // ใช้ URL จาก localized data
-                    type: 'POST',
-                    data: {
-                        action: 'update_fields_order',
-                        fields: items,
-                        nonce: thaitopAdminData.nonce
-                    },
-                    success: function(response) {
-                        if (!response.success) {
-                            alert('ข้อผิดพลาดในการอัปเดตลำดับ: ' + (response.data?.message || 'ข้อผิดพลาดที่ไม่ทราบสาเหตุ'));
-                        }
-                    },
-                    error: function(xhr, status, error) {
-                        console.error('AJAX Error:', {xhr, status, error});
-                        alert('เกิดข้อผิดพลาดของเครือข่ายขณะอัปเดตลำดับ');
+    // Make fields table sortable
+    $('.thaitop-fields-table tbody').sortable({
+        handle: '.sort-handle',
+        axis: 'y',
+        helper: fixHelperModified,
+        update: function(event, ui) {
+            var order = [];
+            $('.thaitop-fields-table tbody tr').each(function() {
+                order.push($(this).data('id'));
+            });
+            
+            // Send AJAX request
+            $.ajax({
+                url: thaitopAdminData.ajaxurl,
+                type: 'POST',
+                data: {
+                    action: 'thaitop_update_field_order',
+                    nonce: thaitopAdminData.nonce,
+                    field_order: order
+                },
+                success: function(response) {
+                    if (!response.success) {
+                        alert('Error updating field order');
                     }
-                });
-            }
+                },
+                error: function() {
+                    alert('Network error while updating order');
+                }
+            });
+        }
+    });
+
+    // Helper function to keep table row dimensions during drag
+    function fixHelperModified(e, tr) {
+        var $originals = tr.children();
+        var $helper = tr.clone();
+        $helper.children().each(function(index) {
+            $(this).width($originals.eq(index).width());
         });
+        return $helper;
     }
 
     // แก้ไขส่วนของ color scheme selector

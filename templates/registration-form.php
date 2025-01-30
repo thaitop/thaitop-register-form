@@ -1,17 +1,6 @@
 <?php defined('ABSPATH') || exit; ?>
 
-<form id="thaitop-registration-form" class="thaitop-form" method="post">
-    <div class="form-group form-row">
-        <div class="form-col">
-            <label for="first_name"><?php esc_html_e('First Name *', 'thaitop-register-form'); ?></label>
-            <input type="text" name="first_name" id="first_name" required />
-        </div>
-        <div class="form-col">
-            <label for="last_name"><?php esc_html_e('Last Name *', 'thaitop-register-form'); ?></label>
-            <input type="text" name="last_name" id="last_name" required />
-        </div>
-    </div>
-    
+<form id="thaitop-registration-form" class="thaitop-form" method="post">    
     <div class="form-group">
         <label for="username"><?php esc_html_e('Username *', 'thaitop-register-form'); ?></label>
         <input type="text" name="username" id="username" required />

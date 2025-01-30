@@ -1,0 +1,46 @@
+.thaitop-form .form-group {
+    margin-bottom: 15px;
+}
+
+.thaitop-form .form-row {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+    margin-bottom: 1.5rem;
+}
+
+.thaitop-form .form-col {
+    box-sizing: border-box;
+}
+
+.thaitop-form .form-col.col-half {
+    flex: 1 1 50%;
+    min-width: 0;
+}
+
+.thaitop-form .form-col.col-full {
+    flex: 0 0 100%;
+    max-width: 100%;
+}
+
+.thaitop-form .form-col label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.thaitop-form .form-col input {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+    .thaitop-form .form-row {
+        flex-direction: column;
+    }
+    .thaitop-form .form-col.col-half {
+        flex: 0 0 100%;
+        max-width: 100%;
+        margin-bottom: 15px;
+    }
+}

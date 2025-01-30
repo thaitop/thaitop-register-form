@@ -9,6 +9,8 @@ class Ajax_Handler {
         add_action('wp_ajax_delete_custom_field', [$this, 'delete_custom_field']);
         add_action('wp_ajax_update_fields_order', [$this, 'update_fields_order']);
         add_action('wp_ajax_update_color_scheme', [$this, 'update_color_scheme']);
+        add_action('wp_ajax_thaitop_update_field_order', [$this, 'update_field_order']);
+        add_action('wp_ajax_thaitop_delete_field', [$this, 'delete_field']);
     }
 
     public function delete_custom_field() {
@@ -103,6 +105,47 @@ class Ajax_Handler {
             wp_send_json_success();
         } else {
             wp_send_json_error();
+        }
+    }
+
+    public function update_field_order() {
+        check_ajax_referer('thaitop_custom_field_action', 'nonce');
+
+        if (!current_user_can('manage_options')) {
+            wp_send_json_error('Unauthorized');
+            return;
+        }
+
+        $field_order = isset($_POST['field_order']) ? $_POST['field_order'] : [];
+        
+        if (empty($field_order)) {
+            wp_send_json_error('No field order data received');
+            return;
+        }
+
+        global $wpdb;
+        $table_name = $this->db_manager->get_table_name();
+        $success = true;
+
+        foreach ($field_order as $position => $field_id) {
+            $result = $wpdb->update(
+                $table_name,
+                ['field_order' => $position],
+                ['id' => absint($field_id)],
+                ['%d'],
+                ['%d']
+            );
+
+            if ($result === false) {
+                $success = false;
+                error_log('Error updating field order: ' . $wpdb->last_error);
+            }
+        }
+
+        if ($success) {
+            wp_send_json_success('Field order updated');
+        } else {
+            wp_send_json_error('Error updating field order');
         }
     }
 }

@@ -11,39 +11,40 @@ class DB_Manager {
 
     public function create_tables() {
         global $wpdb;
+        
         $charset_collate = $wpdb->get_charset_collate();
-
-        $sql = "CREATE TABLE IF NOT EXISTS {$this->table_name} (
-            id bigint(20) NOT NULL AUTO_INCREMENT,
+        $table_name = $wpdb->prefix . 'thaitop_custom_fields';
+        
+        $sql = "CREATE TABLE IF NOT EXISTS {$table_name} (
+            id mediumint(9) NOT NULL AUTO_INCREMENT,
             field_label varchar(100) NOT NULL,
             field_name varchar(100) NOT NULL,
             field_type varchar(50) NOT NULL,
             meta_key varchar(100) NOT NULL,
             required tinyint(1) DEFAULT 0,
-            active tinyint(1) DEFAULT 1,
-            sort_order int(11) DEFAULT 0,
-            created_at datetime DEFAULT CURRENT_TIMESTAMP,
-            PRIMARY KEY (id)
+            field_order int(11) DEFAULT 0,
+            layout varchar(10) DEFAULT 'full',
+            PRIMARY KEY  (id)
         ) $charset_collate;";
-
+        
         require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-        $result = dbDelta($sql);
-        
-        // Add debug logging for table creation
-        error_log('Table creation result: ' . print_r($result, true));
-        
-        // Verify if table exists
-        $table_exists = $wpdb->get_var("SHOW TABLES LIKE '{$this->table_name}'");
-        if (!$table_exists) {
-            error_log('Table creation failed: ' . $this->table_name);
-        }
+        dbDelta($sql);
     }
 
     public function get_custom_fields() {
         global $wpdb;
-        return $wpdb->get_results(
-            "SELECT * FROM {$this->table_name} WHERE active = 1 ORDER BY sort_order ASC"
+        $results = $wpdb->get_results(
+            $wpdb->prepare(
+                "SELECT * FROM {$this->table_name} ORDER BY field_order ASC"
+            )
         );
+        
+        if ($wpdb->last_error) {
+            error_log('DB Error in get_custom_fields: ' . $wpdb->last_error);
+            return [];
+        }
+        
+        return $results;
     }
 
     public function get_table_name() {
@@ -53,6 +54,10 @@ class DB_Manager {
     public function add_field($data) {
         global $wpdb;
         
+        // Get max order
+        $max_order = $wpdb->get_var("SELECT MAX(field_order) FROM {$this->table_name}");
+        $next_order = (int)$max_order + 1;
+        
         // Make sure required fields are present
         if (empty($data['field_label']) || empty($data['field_name']) || 
             empty($data['field_type']) || empty($data['meta_key'])) {
@@ -60,19 +65,33 @@ class DB_Manager {
         }
         
         $result = $wpdb->insert(
-            $this->table_name, // Changed from get_table_name() to table_name property
+            $this->table_name,
             [
                 'field_label' => $data['field_label'],
                 'field_name' => $data['field_name'],
                 'field_type' => $data['field_type'],
                 'meta_key' => $data['meta_key'],
-                'required' => $data['required'],
-                'created_at' => current_time('mysql')
+                'required' => !empty($data['required']) ? 1 : 0, // ปรับปรุงการตรวจสอบ
+                'layout' => isset($data['layout']) ? $data['layout'] : 'full',
+                'field_order' => $next_order
             ],
-            ['%s', '%s', '%s', '%s', '%d', '%s']
+            [
+                '%s', // field_label
+                '%s', // field_name
+                '%s', // field_type
+                '%s', // meta_key
+                '%d', // required
+                '%s', // layout
+                '%d'  // field_order
+            ]
         );
         
-        return $result !== false;
+        if ($result === false) {
+            error_log('DB Error in add_field: ' . $wpdb->last_error);
+            return false;
+        }
+        
+        return true;
     }
 
     public function update_field($id, $data) {

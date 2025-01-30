@@ -237,6 +237,9 @@ class Admin_Settings {
                 true
             );
 
+            // Add jQuery UI Sortable
+            wp_enqueue_script('jquery-ui-sortable');
+            
             wp_localize_script('thaitop-admin-script', 'thaitopAdminData', [
                 'nonce' => wp_create_nonce('thaitop_custom_field_action'),
                 'ajaxurl' => admin_url('admin-ajax.php') // Add ajaxurl
@@ -374,6 +377,16 @@ class Admin_Settings {
             return;
         }
 
+        // เพิ่มการตรวจสอบการเชื่อมต่อกับตาราง
+        global $wpdb;
+        $table_name = $this->db_manager->get_table_name();
+        if ($wpdb->get_var("SHOW TABLES LIKE '$table_name'") != $table_name) {
+            echo '<div class="notice notice-error"><p>';
+            esc_html_e('Custom fields table does not exist. Please deactivate and reactivate the plugin.', 'thaitop-register-form');
+            echo '</p></div>';
+            return;
+        }
+
         // Handle form submission
         if (isset($_POST['add_custom_field'])) {
             check_admin_referer('thaitop_custom_field_nonce');
@@ -395,12 +408,33 @@ class Admin_Settings {
             }
             
             if (!$has_errors) {
+                global $wpdb;
+                
+                // ตรวจสอบว่า field_name และ meta_key ไม่ซ้ำ
+                $exists = $wpdb->get_var($wpdb->prepare(
+                    "SELECT COUNT(*) FROM {$this->db_manager->get_table_name()} 
+                     WHERE field_name = %s OR meta_key = %s",
+                    $_POST['field_name'],
+                    $_POST['meta_key']
+                ));
+                
+                if ($exists) {
+                    add_settings_error(
+                        'thaitop_messages',
+                        'thaitop_field_error',
+                        __('Field name or meta key already exists.', 'thaitop-register-form'),
+                        'error'
+                    );
+                    return;
+                }
+                
                 $result = $this->db_manager->add_field([
                     'field_label' => sanitize_text_field($_POST['field_label']),
                     'field_name' => sanitize_key($_POST['field_name']),
                     'field_type' => sanitize_key($_POST['field_type']),
                     'meta_key' => sanitize_key($_POST['meta_key']),
-                    'required' => isset($_POST['required']) ? 1 : 0
+                    'required' => isset($_POST['required']) ? 1 : 0,
+                    'layout' => sanitize_text_field($_POST['field_layout'])
                 ]);
 
                 if ($result) {
@@ -414,7 +448,7 @@ class Admin_Settings {
                     add_settings_error(
                         'thaitop_messages',
                         'thaitop_field_error',
-                        __('Database error while adding field.', 'thaitop-register-form'),
+                        __('Database error while adding field. Please check error logs.', 'thaitop-register-form'),
                         'error'
                     );
                 }
@@ -467,6 +501,18 @@ class Admin_Settings {
                                 <tr>
                                     <th><label for="required"><?php esc_html_e('Required', 'thaitop-register-form'); ?></label></th>
                                     <td><input type="checkbox" name="required" id="required"></td>
+                                </tr>
+                                <tr>
+                                    <th><label for="field_layout"><?php esc_html_e('Field Layout', 'thaitop-register-form'); ?></label></th>
+                                    <td>
+                                        <select name="field_layout" id="field_layout">
+                                            <option value="full"><?php esc_html_e('Full Width', 'thaitop-register-form'); ?></option>
+                                            <option value="half"><?php esc_html_e('Half Width', 'thaitop-register-form'); ?></option>
+                                        </select>
+                                        <p class="description">
+                                            <?php esc_html_e('Choose how the field should be displayed in the form', 'thaitop-register-form'); ?>
+                                        </p>
+                                    </td>
                                 </tr>
                             </table>
                             <?php submit_button(__('Add Field', 'thaitop-register-form'), 'primary', 'add_custom_field'); ?>

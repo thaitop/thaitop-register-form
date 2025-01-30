@@ -33,20 +33,111 @@ class Form_Handler {
     }
 
     public function render_custom_fields() {
-        $custom_fields = $this->db_manager->get_custom_fields();
-        foreach ($custom_fields as $field) {
-            ?>
-            <div class="form-group">
-                <label for="<?php echo esc_attr($field->field_name); ?>">
-                    <?php echo esc_html($field->field_label); ?>
-                    <?php echo $field->required ? ' *' : ''; ?>
-                </label>
-                <input type="<?php echo esc_attr($field->field_type); ?>"
-                       name="<?php echo esc_attr($field->field_name); ?>"
-                       id="<?php echo esc_attr($field->field_name); ?>"
-                       <?php echo $field->required ? 'required' : ''; ?> />
-            </div>
-            <?php
+        $fields = $this->db_manager->get_custom_fields();
+        if (empty($fields)) {
+            return;
+        }
+
+        $half_width_fields = [];
+        $full_width_fields = [];
+
+        // แยกฟิลด์ตาม layout
+        foreach ($fields as $field) {
+            if ($field->layout === 'half') {
+                $half_width_fields[] = $field;
+            } else {
+                $full_width_fields[] = $field;
+            }
+        }
+
+        // จัดการฟิลด์ half width
+        for ($i = 0; $i < count($half_width_fields); $i += 2) {
+            echo '<div class="form-group form-row">';
+            echo '<div class="form-col col-half">';
+            $this->render_field($half_width_fields[$i]);
+            echo '</div>';
+            
+            // ฟิลด์ที่สองของคู่ (ถ้ามี)
+            if (isset($half_width_fields[$i + 1])) {
+                echo '<div class="form-col col-half">';
+                $this->render_field($half_width_fields[$i + 1]);
+                echo '</div>';
+            }
+            echo '</div>';
+        }
+
+        // จัดการฟิลด์ full width
+        foreach ($full_width_fields as $field) {
+            echo '<div class="form-group">';
+            echo '<div class="form-col col-full">';
+            $this->render_field($field);
+            echo '</div>';
+            echo '</div>';
+        }
+    }
+
+    private function render_field_row($fields) {
+        echo '<div class="form-row">';
+        foreach ($fields as $field) {
+            $layout = isset($field['layout']) ? $field['layout'] : 'full';
+            $col_class = $layout === 'half' ? 'col-half' : 'col-full';
+            
+            echo '<div class="form-col ' . esc_attr($col_class) . '">';
+            $this->render_field($field);
+            echo '</div>';
+        }
+        echo '</div>';
+    }
+
+    private function render_field($field) {
+        // เปลี่ยนการตรวจสอบ required
+        $required = !empty($field->required) ? 'required' : '';
+        $required_mark = !empty($field->required) ? ' *' : '';
+        
+        echo '<label for="' . esc_attr($field->field_name) . '">';
+        echo esc_html($field->field_label . $required_mark);
+        echo '</label>';
+        
+        switch ($field->field_type) {
+            case 'text':
+                echo '<input type="text" 
+                    name="' . esc_attr($field->field_name) . '" 
+                    id="' . esc_attr($field->field_name) . '" 
+                    value="' . (isset($_POST[$field->field_name]) ? esc_attr($_POST[$field->field_name]) : '') . '" 
+                    ' . $required . '>';
+                break;
+                
+            case 'email':
+                echo '<input type="email" 
+                    name="' . esc_attr($field->field_name) . '" 
+                    id="' . esc_attr($field->field_name) . '" 
+                    value="' . $value . '" 
+                    ' . $required . '>';
+                break;
+                
+            case 'tel':
+                echo '<input type="tel" 
+                    name="' . esc_attr($field->field_name) . '" 
+                    id="' . esc_attr($field->field_name) . '" 
+                    value="' . $value . '" 
+                    ' . $required . '>';
+                break;
+                
+            case 'date':
+                echo '<input type="date" 
+                    name="' . esc_attr($field->field_name) . '" 
+                    id="' . esc_attr($field->field_name) . '" 
+                    value="' . $value . '" 
+                    ' . $required . '>';
+                break;
+                
+            default:
+                echo '<input type="text" 
+                    name="' . esc_attr($field->field_name) . '" 
+                    id="' . esc_attr($field->field_name) . '" 
+                    value="' . $value . '" 
+                    ' . $required . '>';
+                break;
         }
     }
 
@@ -62,13 +153,11 @@ class Form_Handler {
         $username = sanitize_user($_POST['username']);
         $email = sanitize_email($_POST['email']);
         $password = $_POST['password'];
-        $first_name = sanitize_text_field($_POST['first_name']);
-        $last_name = sanitize_text_field($_POST['last_name']);
 
         $errors = new \WP_Error();
 
         // Validation
-        if (empty($username) || empty($email) || empty($password) || empty($first_name) || empty($last_name)) {
+        if (empty($username) || empty($email) || empty($password)) {
             $errors->add('field', __('Please fill in all required fields', 'thaitop-register-form'));
         }
 
@@ -88,6 +177,17 @@ class Form_Handler {
             }
         }
 
+        // Validate custom fields
+        $custom_fields = $this->db_manager->get_custom_fields();
+        foreach ($custom_fields as $field) {
+            if (!empty($field->required) && empty($_POST[$field->field_name])) {
+                $errors->add('required_field', sprintf(
+                    __('Field "%s" is required.', 'thaitop-register-form'),
+                    $field->field_label
+                ));
+            }
+        }
+
         // Process errors or create user
         if ($errors->has_errors()) {
             foreach ($errors->get_error_messages() as $error) {
@@ -98,11 +198,7 @@ class Form_Handler {
 
         $user_id = wp_create_user($username, $password, $email);
         if (!is_wp_error($user_id)) {
-            // Update user meta
-            update_user_meta($user_id, 'first_name', $first_name);
-            update_user_meta($user_id, 'last_name', $last_name);
-            
-            // Save custom fields
+            // Save custom fields only
             $custom_fields = $this->db_manager->get_custom_fields();
             foreach ($custom_fields as $field) {
                 if (isset($_POST[$field->field_name])) {
@@ -178,14 +274,7 @@ class Form_Handler {
         
         if(empty($color))
             return $default; 
-        
-        if ($color[0] == '#' ) {
-            $color = substr($color, 1);
-        }
-        
-        if (strlen($color) == 6) {
-            $hex = array($color[0] . $color[1], $color[2] . $color[3], $color[4] . $color[5]);
-        } elseif (strlen($color) == 3) {
+                if ($color[0] == '#' ) {            $color = substr($color, 1);        }                if (strlen($color) == 6) {            $hex = array($color[0] . $color[1], $color[2] . $color[3], $color[4] . $color[5]);        } elseif (strlen($color) == 3) {
             $hex = array($color[0] . $color[0], $color[1] . $color[1], $color[2] . $color[2]);
         } else {
             return $default;
@@ -222,5 +311,16 @@ class Form_Handler {
         // Default redirect if empty
         wp_redirect(home_url());
         exit;
+    }
+
+    public function get_custom_fields() {
+        global $wpdb;
+        $table_name = $wpdb->prefix . 'thaitop_custom_fields';
+        
+        $fields = $wpdb->get_results(
+            "SELECT * FROM {$table_name} ORDER BY field_order ASC"
+        );
+        
+        return $fields ?: [];
     }
 }
