@@ -46,6 +46,11 @@
     text-decoration: underline;
 }
 
+.thaitop-fields-table .meta-keys-column {
+    word-break: break-word;
+    max-width: 200px;
+}
+
 @media screen and (max-width: 782px) {
     .thaitop-admin-page {
         margin-right: 10px;

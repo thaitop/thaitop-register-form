@@ -1,4 +1,31 @@
-# ThaiTop Register Form v1.1.0
+# ThaiTop Register Form Changelog
+
+## Version 1.1.1 (2025-01-31)
+### 🎉 New Features
+- Added support for multiple meta keys per field
+- Added English-only username validation
+- Added international phone number format support (+66)
+
+### 🐛 Bug Fixes
+- Fixed meta keys merging issue
+- Fixed phone number validation with country code
+- Fixed username validation to only allow English characters
+- Fixed form field spacing issues
+
+### 🔧 Improvements
+- Enhanced meta keys handling and storage
+- Improved input validation messages
+- Better phone number format handling
+- Added clear validation messages
+- Improved meta keys display in admin panel
+
+### 📚 Documentation
+- Added meta keys usage examples
+- Updated username requirements
+- Added phone number format guide
+- Improved field validation documentation
+
+## Version 1.1.0
 
 ## 🎉 New Features
 - Added flexible field layouts (Full/Half width)

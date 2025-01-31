@@ -2,8 +2,13 @@
 
 <form id="thaitop-registration-form" class="thaitop-form" method="post">    
     <div class="form-group">
-        <label for="username"><?php esc_html_e('Username *', 'thaitop-register-form'); ?></label>
-        <input type="text" name="username" id="username" required />
+        <label for="username"><?php esc_html_e('Username * (English only)', 'thaitop-register-form'); ?></label>
+        <input type="text" 
+            name="username" 
+            id="username" 
+            pattern="[a-zA-Z0-9]+" 
+            title="<?php esc_attr_e('Username must contain only English letters and numbers', 'thaitop-register-form'); ?>"
+            required />
     </div>
     
     <div class="form-group">

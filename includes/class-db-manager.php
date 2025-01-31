@@ -20,7 +20,7 @@ class DB_Manager {
             field_label varchar(100) NOT NULL,
             field_name varchar(100) NOT NULL,
             field_type varchar(50) NOT NULL,
-            meta_key varchar(100) NOT NULL,
+            meta_keys text NOT NULL, /* เปลี่ยนจาก meta_key เป็น meta_keys */
             required tinyint(1) DEFAULT 0,
             field_order int(11) DEFAULT 0,
             layout varchar(10) DEFAULT 'full',
@@ -58,9 +58,31 @@ class DB_Manager {
         $max_order = $wpdb->get_var("SELECT MAX(field_order) FROM {$this->table_name}");
         $next_order = (int)$max_order + 1;
         
+        // จัดการ meta keys
+        if (!empty($data['meta_key'])) {
+            // ลบ whitespace และจัดรูปแบบ
+            $meta_keys = trim($data['meta_key']);
+            $meta_keys = preg_replace('/\s*,\s*/', ',', $meta_keys);
+            
+            // แยก keys และทำความสะอาดแต่ละ key
+            $keys = explode(',', $meta_keys);
+            $clean_keys = array_map('trim', $keys);
+            
+            // กรองค่าว่างและค่าซ้ำออก
+            $clean_keys = array_filter(array_unique($clean_keys));
+            
+            // รวมกลับเป็น string
+            $meta_keys = implode(',', $clean_keys);
+        } else {
+            $meta_keys = '';
+        }
+        
+        // ตรวจสอบค่าที่จะบันทึก
+        error_log('Meta keys before save: ' . $meta_keys);
+        
         // Make sure required fields are present
         if (empty($data['field_label']) || empty($data['field_name']) || 
-            empty($data['field_type']) || empty($data['meta_key'])) {
+            empty($data['field_type']) || empty($meta_keys)) {
             return false;
         }
         
@@ -70,7 +92,7 @@ class DB_Manager {
                 'field_label' => $data['field_label'],
                 'field_name' => $data['field_name'],
                 'field_type' => $data['field_type'],
-                'meta_key' => $data['meta_key'],
+                'meta_keys' => $meta_keys, // บันทึกค่าที่ทำความสะอาดแล้ว
                 'required' => !empty($data['required']) ? 1 : 0, // ปรับปรุงการตรวจสอบ
                 'layout' => isset($data['layout']) ? $data['layout'] : 'full',
                 'field_order' => $next_order
@@ -79,7 +101,7 @@ class DB_Manager {
                 '%s', // field_label
                 '%s', // field_name
                 '%s', // field_type
-                '%s', // meta_key
+                '%s', // meta_keys
                 '%d', // required
                 '%s', // layout
                 '%d'  // field_order

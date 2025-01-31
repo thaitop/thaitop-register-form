@@ -51,7 +51,7 @@ class Form_Handler {
         }
 
         // จัดการฟิลด์ half width
-        for ($i = 0; $i < count($half_width_fields); $i += 2) {
+        for ($i = 0; $i < count($half_width_fields); $i += 2) {  // แก้ไขจาก i เป็น $i
             echo '<div class="form-group form-row">';
             echo '<div class="form-col col-half">';
             $this->render_field($half_width_fields[$i]);
@@ -90,9 +90,10 @@ class Form_Handler {
     }
 
     private function render_field($field) {
-        // เปลี่ยนการตรวจสอบ required
+        // เปลี่ยนการตรวจสอบ required และกำหนดค่า value
         $required = !empty($field->required) ? 'required' : '';
         $required_mark = !empty($field->required) ? ' *' : '';
+        $value = isset($_POST[$field->field_name]) ? esc_attr($_POST[$field->field_name]) : '';
         
         echo '<label for="' . esc_attr($field->field_name) . '">';
         echo esc_html($field->field_label . $required_mark);
@@ -103,7 +104,7 @@ class Form_Handler {
                 echo '<input type="text" 
                     name="' . esc_attr($field->field_name) . '" 
                     id="' . esc_attr($field->field_name) . '" 
-                    value="' . (isset($_POST[$field->field_name]) ? esc_attr($_POST[$field->field_name]) : '') . '" 
+                    value="' . $value . '" 
                     ' . $required . '>';
                 break;
                 
@@ -120,6 +121,11 @@ class Form_Handler {
                     name="' . esc_attr($field->field_name) . '" 
                     id="' . esc_attr($field->field_name) . '" 
                     value="' . $value . '" 
+                    pattern="[\+]?[0-9]{9,15}"
+                    minlength="9"
+                    maxlength="15"
+                    placeholder="+66xxxxxxxxx"
+                    title="' . esc_attr__('Please enter a valid phone number (e.g. +66966529952)', 'thaitop-register-form') . '"
                     ' . $required . '>';
                 break;
                 
@@ -161,6 +167,11 @@ class Form_Handler {
             $errors->add('field', __('Please fill in all required fields', 'thaitop-register-form'));
         }
 
+        // ตรวจสอบว่า username เป็นภาษาอังกฤษเท่านั้น
+        if (!preg_match('/^[a-zA-Z0-9]+$/', $username)) {
+            $errors->add('invalid_username', __('Username must contain only English letters and numbers', 'thaitop-register-form'));
+        }
+
         if (username_exists($username)) {
             $errors->add('username_exists', __('This username is already taken', 'thaitop-register-form'));
         }
@@ -180,11 +191,34 @@ class Form_Handler {
         // Validate custom fields
         $custom_fields = $this->db_manager->get_custom_fields();
         foreach ($custom_fields as $field) {
-            if (!empty($field->required) && empty($_POST[$field->field_name])) {
-                $errors->add('required_field', sprintf(
-                    __('Field "%s" is required.', 'thaitop-register-form'),
-                    $field->field_label
-                ));
+            if (isset($_POST[$field->field_name])) {
+                $value = $_POST[$field->field_name];
+                
+                // Validate required fields
+                if (!empty($field->required) && empty($value)) {
+                    $errors->add('required_field', sprintf(
+                        __('Field "%s" is required.', 'thaitop-register-form'),
+                        $field->field_label
+                    ));
+                    continue;
+                }
+                
+                // Validate phone numbers
+                if ($field->field_type === 'tel' && !empty($value)) {
+                    // ลบช่องว่างและอักขระพิเศษที่ไม่ใช่ + ออก
+                    $clean_number = preg_replace('/[^0-9\+]/', '', $value);
+                    
+                    // ตรวจสอบรูปแบบเบอร์โทร
+                    if (!preg_match('/^\+?[0-9]{9,15}$/', $clean_number)) {
+                        $errors->add('invalid_phone', sprintf(
+                            __('"%s" must be a valid phone number (9-15 digits with optional country code).', 'thaitop-register-form'),
+                            $field->field_label
+                        ));
+                    }
+                    
+                    // บันทึกเบอร์โทรที่ผ่านการทำความสะอาด
+                    $_POST[$field->field_name] = $clean_number;
+                }
             }
         }
 
@@ -198,12 +232,25 @@ class Form_Handler {
 
         $user_id = wp_create_user($username, $password, $email);
         if (!is_wp_error($user_id)) {
-            // Save custom fields only
+            // Save custom fields
             $custom_fields = $this->db_manager->get_custom_fields();
             foreach ($custom_fields as $field) {
                 if (isset($_POST[$field->field_name])) {
                     $value = sanitize_text_field($_POST[$field->field_name]);
-                    update_user_meta($user_id, $field->meta_key, $value);
+                    
+                    // แยกและทำความสะอาด meta keys
+                    $meta_keys_array = preg_split('/[,\s]+/', trim($field->meta_keys));
+                    $clean_keys = array_map(function($key) {
+                        return trim($key, " \t\n\r\0\x0B,");
+                    }, $meta_keys_array);
+                    
+                    // กรองค่าว่างออกและลบค่าซ้ำ
+                    $clean_keys = array_filter(array_unique($clean_keys));
+                    
+                    // บันทึกค่าในแต่ละ meta key ที่ผ่านการทำความสะอาดแล้ว
+                    foreach ($clean_keys as $meta_key) {
+                        update_user_meta($user_id, $meta_key, $value);
+                    }
                 }
             }
 
@@ -322,5 +369,17 @@ class Form_Handler {
         );
         
         return $fields ?: [];
+    }
+
+    private function format_meta_keys($meta_keys_string) {
+        if (empty($meta_keys_string)) {
+            return '';
+        }
+        // แยก meta keys และทำความสะอาด
+        $keys = array_map('trim', explode(',', $meta_keys_string));
+        // กรองเอาค่าว่างออก
+        $keys = array_filter($keys);
+        // รวมกลับด้วยจุลภาคและเว้นวรรค
+        return implode(', ', $keys);
     }
 }

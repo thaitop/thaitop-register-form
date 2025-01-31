@@ -428,11 +428,15 @@ class Admin_Settings {
                     return;
                 }
                 
+                // ทำความสะอาด meta keys ก่อนส่งไป DB Manager
+                $meta_keys = trim($_POST['meta_key']);
+                $meta_keys = preg_replace('/\s*,\s*/', ',', $meta_keys); // แทนที่ space รอบๆ จุลภาค
+
                 $result = $this->db_manager->add_field([
                     'field_label' => sanitize_text_field($_POST['field_label']),
                     'field_name' => sanitize_key($_POST['field_name']),
                     'field_type' => sanitize_key($_POST['field_type']),
-                    'meta_key' => sanitize_key($_POST['meta_key']),
+                    'meta_key' => $meta_keys, // ส่งค่าที่ทำความสะอาดแล้ว
                     'required' => isset($_POST['required']) ? 1 : 0,
                     'layout' => sanitize_text_field($_POST['field_layout'])
                 ]);
@@ -492,10 +496,12 @@ class Admin_Settings {
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th><label for="meta_key"><?php esc_html_e('Meta Key', 'thaitop-register-form'); ?></label></th>
+                                    <th><label for="meta_key"><?php esc_html_e('Meta Keys', 'thaitop-register-form'); ?></label></th>
                                     <td>
                                         <input type="text" name="meta_key" id="meta_key" class="regular-text" required>
-                                        <p class="description"><?php esc_html_e('The key that will be used to store this field in user meta', 'thaitop-register-form'); ?></p>
+                                        <p class="description">
+                                            <?php esc_html_e('Enter meta keys separated by commas (e.g. first_name,user_firstname,display_name)', 'thaitop-register-form'); ?>
+                                        </p>
                                     </td>
                                 </tr>
                                 <tr>
@@ -542,7 +548,15 @@ class Admin_Settings {
                                             <td><?php echo esc_html($field->field_label); ?></td>
                                             <td><?php echo esc_html($field->field_name); ?></td>
                                             <td><?php echo esc_html($field->field_type); ?></td>
-                                            <td><?php echo esc_html($field->meta_key); ?></td>
+                                            <td class="meta-keys-column"><?php 
+                                                // จัดรูปแบบการแสดง meta keys
+                                                $keys = preg_split('/[,\s]+/', $field->meta_keys);
+                                                $clean_keys = array_map(function($key) {
+                                                    return trim($key, " \t\n\r\0\x0B,");
+                                                }, $keys);
+                                                $clean_keys = array_filter($clean_keys);
+                                                echo esc_html(implode(', ', array_unique($clean_keys))); 
+                                            ?></td>
                                             <td><?php echo $field->required ? '✓' : ''; ?></td>
                                             <td class="column-actions">
                                                 <a href="#" class="delete-field" data-id="<?php echo esc_attr($field->id); ?>">
@@ -553,7 +567,7 @@ class Admin_Settings {
                                     <?php endforeach; ?>
                                 <?php else: ?>
                                     <tr>
-                                        <td colspan="6" style="text-align: center;">
+                                        <td colspan="7" style="text-align: center;">
                                             <?php esc_html_e('No custom fields found.', 'thaitop-register-form'); ?>
                                         </td>
                                     </tr>

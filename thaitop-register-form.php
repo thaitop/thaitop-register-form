@@ -3,7 +3,7 @@
  * Plugin Name: ThaiTop Register Form
  * Plugin URI: https://thaitoptecs.com
  * Description: WordPress user registration form with custom fields.
- * Version: 1.1.0
+ * Version: 1.1.1
  * Author: ThaiTop
  * Author URI: https://thaitoptecs.com
  * Text Domain: thaitop-register-form
@@ -17,7 +17,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Define plugin constants
-define('THAITOP_REGISTER_VERSION', '1.0.0');
+define('THAITOP_REGISTER_VERSION', '1.1.1');
 define('THAITOP_REGISTER_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('THAITOP_REGISTER_PLUGIN_URL', plugin_dir_url(__FILE__));
 

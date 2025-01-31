@@ -16,11 +16,14 @@ WordPress plugin for creating custom user registration forms with additional fie
 
 ## Features
 - Custom registration forms with additional fields
-- Flexible field layouts (Full width / Half width)
+- Support for multiple meta keys per field
+- English-only username validation
+- International phone number format (+66)
+- Flexible field layouts (Full/Half width)
 - Form field types supported:
   - Text
   - Email
-  - Phone
+  - Phone (with country code)
   - Date
 - Google reCAPTCHA v2 integration
 - Custom color schemes
@@ -41,12 +44,12 @@ WordPress plugin for creating custom user registration forms with additional fie
    - Field Label
    - Field Name
    - Field Type
-   - Meta Key
+   - Meta Keys (multiple keys separated by commas)
    - Required/Optional
    - Layout (Full/Half width)
 
-### Display the Form
-Use shortcode in any post or page:
+### Meta Keys Usage
+You can assign multiple meta keys to a single field:
 ```
 [thaitop_register_form]
 ```
